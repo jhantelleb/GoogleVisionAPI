@@ -32,8 +32,8 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     @IBAction func loadImageButtonTapped(_ sender: UIButton) {
         imagePicker.allowsEditing = false
-        imagePicker.sourceType = .photoLibrary
-        
+//        imagePicker.sourceType = .photoLibrary
+        imagePicker.sourceType = .camera
         present(imagePicker, animated: true, completion: nil)
     }
     
@@ -94,7 +94,13 @@ extension ViewController {
                 guard webDetection != JSON.null else { return }
                 
                 let webEntities = webDetection["webEntities"]
-                let score = webEntities["score"] <= 2.0 ? print(webEntities) : print("")
+                for a in webEntities {
+                    if a.0 == "score" &&
+                       a.1 <= 2.0 {
+                        print(a.0, a.1)
+                    }
+                }
+
                 
                 // Get face annotations
                 let faceAnnotations: JSON = responses["faceAnnotations"]
